@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Snake on a sphere" />
+  <title>Globe Snake</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brand">
+        <span class="title">Globe Snake</span>
+        <span class="subtitle">Steer the orbit, stay on the sphere.</span>
+      </div>
+      <div class="scoreboard">
+        <div class="score">
+          <span class="label">Score</span>
+          <span id="score" class="value">0</span>
+        </div>
+        <div class="status" id="status">Ready</div>
+      </div>
+    </header>
+
+    <section class="stage" id="stage">
+      <canvas id="game" aria-label="Globe Snake game"></canvas>
+      <div class="overlay" id="overlay">
+        <div class="panel">
+          <h2 id="overlay-title">Globe Snake</h2>
+          <p id="overlay-body">Turn left/right to stay on the sphere. Eat the bright orb. Avoid your tail.</p>
+          <button class="primary" id="start">Start</button>
+          <div class="hint">Arrow keys, A/D, or tap the controls.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls">
+      <div class="buttons">
+        <button class="control" id="left" aria-label="Turn left">Left</button>
+        <button class="control" id="right" aria-label="Turn right">Right</button>
+      </div>
+      <div class="legend">
+        <div><span class="dot"></span> Pellet</div>
+        <div><span class="trail"></span> Tail</div>
+        <div class="note">Space to pause.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="game.js"></script>
+</body>
+</html>

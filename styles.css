@@ -1,0 +1,240 @@
+:root {
+  color-scheme: light;
+  --bg: #f4f7f9;
+  --bg-dark: #d6e3e8;
+  --surface: #ffffff;
+  --text: #1a2a2f;
+  --muted: #557079;
+  --accent: #ff8a4c;
+  --accent-2: #2a9d8f;
+  --stroke: rgba(26, 42, 47, 0.15);
+  --shadow: 0 30px 60px rgba(19, 39, 51, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 20%, #ffffff 0%, var(--bg) 35%, #d8e7ec 70%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0px, rgba(255, 255, 255, 0.4) 2px, rgba(255, 255, 255, 0.2) 2px, rgba(255, 255, 255, 0.2) 8px);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.shell {
+  width: min(960px, 100%);
+  display: grid;
+  gap: 24px;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.score {
+  background: var(--surface);
+  padding: 10px 16px;
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--stroke);
+  min-width: 110px;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.value {
+  font-family: "Space Mono", "Courier New", monospace;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.status {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.stage {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  width: min(560px, 100%);
+  margin: 0 auto;
+  background: linear-gradient(160deg, #ffffff, #ecf2f4 55%, #d5e1e6 100%);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--stroke);
+  overflow: hidden;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(216, 231, 236, 0.92));
+  transition: opacity 0.3s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel {
+  background: rgba(255, 255, 255, 0.92);
+  padding: 24px 26px;
+  border-radius: 18px;
+  text-align: center;
+  border: 1px solid var(--stroke);
+  box-shadow: 0 20px 40px rgba(26, 42, 47, 0.12);
+  max-width: 320px;
+}
+
+.panel h2 {
+  margin: 0 0 10px;
+}
+
+.panel p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.primary {
+  background: var(--accent);
+  color: #1a1a1a;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(255, 138, 76, 0.35);
+}
+
+.hint {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.control {
+  background: var(--surface);
+  border: 1px solid var(--stroke);
+  border-radius: 16px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(26, 42, 47, 0.12);
+  transition: transform 0.2s ease, background 0.2s ease;
+  touch-action: manipulation;
+}
+
+.control.active {
+  background: rgba(42, 157, 143, 0.18);
+  transform: translateY(-2px);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.legend span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.legend .dot {
+  background: var(--accent);
+}
+
+.legend .trail {
+  background: var(--accent-2);
+}
+
+.note {
+  font-family: "Space Mono", "Courier New", monospace;
+  font-size: 12px;
+}
+
+@media (max-width: 720px) {
+  .scoreboard {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .legend {
+    justify-content: space-between;
+    width: 100%;
+  }
+}

@@ -16,6 +16,10 @@ const SETTINGS = {
   fixedDelta: 16,
   cameraZ: 2.4,
   maxSpeedBoost: 0.6,
+  initialGlobeScale: 0.85,
+  globeGrowthPerOrb: 0.015,
+  globeScaleLerp: 0.04,
+  maxGlobeScale: 1.15,
 };
 
 let width = 0;
@@ -23,6 +27,9 @@ let height = 0;
 let centerX = 0;
 let centerY = 0;
 let focalLength = 0;
+
+let globeScale = SETTINGS.initialGlobeScale;
+let targetGlobeScale = SETTINGS.initialGlobeScale;
 
 let snake = [];
 let pellet = null;
@@ -203,6 +210,9 @@ function checkCollisions() {
 function update(deltaMs) {
   if (!running || paused || gameOver) return;
 
+  // Smooth globe scale interpolation
+  globeScale += (targetGlobeScale - globeScale) * SETTINGS.globeScaleLerp;
+
   accumulator += deltaMs;
   if (accumulator > SETTINGS.fixedDelta * 5) {
     accumulator = SETTINGS.fixedDelta * 5;
@@ -226,15 +236,21 @@ function update(deltaMs) {
     if (hit === "pellet") {
       addSnakeNode();
       setScore(score + 1);
+      targetGlobeScale = Math.min(targetGlobeScale + SETTINGS.globeGrowthPerOrb, SETTINGS.maxGlobeScale);
       spawnPellet();
     }
   }
 }
 
+function getScaledFocalLength() {
+  return focalLength * globeScale;
+}
+
 function project(point) {
   const p = copyPoint(point);
   p.z += SETTINGS.cameraZ;
-  const scale = focalLength / p.z;
+  const scaledFocal = getScaledFocalLength();
+  const scale = scaledFocal / p.z;
 
   return {
     x: centerX + p.x * scale,
@@ -256,12 +272,13 @@ function drawPoint(point, radius, color) {
 function render() {
   ctx.clearRect(0, 0, width, height);
 
-  const glow = ctx.createRadialGradient(centerX, centerY, focalLength * 0.1, centerX, centerY, focalLength * 0.75);
+  const scaledFocal = getScaledFocalLength();
+  const glow = ctx.createRadialGradient(centerX, centerY, scaledFocal * 0.1, centerX, centerY, scaledFocal * 0.75);
   glow.addColorStop(0, "rgba(255,255,255,0.6)");
   glow.addColorStop(1, "rgba(214,227,232,0.2)");
   ctx.fillStyle = glow;
   ctx.beginPath();
-  ctx.arc(centerX, centerY, focalLength * 0.72, 0, Math.PI * 2);
+  ctx.arc(centerX, centerY, scaledFocal * 0.72, 0, Math.PI * 2);
   ctx.fill();
 
   for (const point of gridPoints) {
@@ -279,7 +296,7 @@ function render() {
   ctx.lineWidth = 2;
   ctx.strokeStyle = "rgba(0,0,0,0.18)";
   ctx.beginPath();
-  ctx.arc(centerX, centerY, focalLength * 0.63, 0, Math.PI * 2);
+  ctx.arc(centerX, centerY, scaledFocal * 0.63, 0, Math.PI * 2);
   ctx.stroke();
 }
 
@@ -307,6 +324,8 @@ function resetGame() {
   snake = [];
   direction = SETTINGS.startingDirection;
   setScore(0);
+  globeScale = SETTINGS.initialGlobeScale;
+  targetGlobeScale = SETTINGS.initialGlobeScale;
   buildGrid();
   for (let i = 0; i < 9; i += 1) addSnakeNode();
   spawnPellet();

@@ -23,30 +23,24 @@ body {
     radial-gradient(circle at 20% 20%, #ffffff 0%, var(--bg) 35%, #d8e7ec 70%),
     repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0px, rgba(255, 255, 255, 0.4) 2px, rgba(255, 255, 255, 0.2) 2px, rgba(255, 255, 255, 0.2) 8px);
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
 }
 
 .shell {
   width: min(960px, 100%);
-  display: grid;
-  gap: 24px;
+  margin: 0 auto;
+  padding: 16px 24px;
 }
 
 .top {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .brand {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  align-items: center;
 }
 
 .title {
@@ -54,10 +48,6 @@ body {
   font-weight: 700;
 }
 
-.subtitle {
-  color: var(--muted);
-  font-size: 15px;
-}
 
 .scoreboard {
   display: flex;
@@ -88,10 +78,6 @@ body {
   font-weight: 700;
 }
 
-.status {
-  font-size: 14px;
-  color: var(--muted);
-}
 
 .stage {
   position: relative;
@@ -163,78 +149,3 @@ canvas {
   color: var(--muted);
 }
 
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.buttons {
-  display: flex;
-  gap: 12px;
-}
-
-.control {
-  background: var(--surface);
-  border: 1px solid var(--stroke);
-  border-radius: 16px;
-  padding: 12px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 12px 24px rgba(26, 42, 47, 0.12);
-  transition: transform 0.2s ease, background 0.2s ease;
-  touch-action: manipulation;
-}
-
-.control.active {
-  background: rgba(42, 157, 143, 0.18);
-  transform: translateY(-2px);
-}
-
-.legend {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.legend span {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-right: 6px;
-}
-
-.legend .dot {
-  background: var(--accent);
-}
-
-.legend .trail {
-  background: var(--accent-2);
-}
-
-.note {
-  font-family: "Space Mono", "Courier New", monospace;
-  font-size: 12px;
-}
-
-@media (max-width: 720px) {
-  .scoreboard {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .legend {
-    justify-content: space-between;
-    width: 100%;
-  }
-}

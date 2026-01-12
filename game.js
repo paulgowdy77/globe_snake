@@ -4,9 +4,6 @@ const stage = document.querySelector("#stage");
 const overlay = document.querySelector("#overlay");
 const startBtn = document.querySelector("#start");
 const scoreEl = document.querySelector("#score");
-const statusEl = document.querySelector("#status");
-const leftBtn = document.querySelector("#left");
-const rightBtn = document.querySelector("#right");
 
 const SETTINGS = {
   nodeAngle: Math.PI / 60,
@@ -95,10 +92,6 @@ const collisionDistance = 2 * Math.sin(SETTINGS.nodeAngle);
 function setScore(nextScore) {
   score = nextScore;
   scoreEl.textContent = score.toString();
-}
-
-function setStatus(text) {
-  statusEl.textContent = text;
 }
 
 function buildGrid() {
@@ -330,7 +323,6 @@ function resetGame() {
   for (let i = 0; i < 9; i += 1) addSnakeNode();
   spawnPellet();
   gameOver = false;
-  setStatus("Live");
 }
 
 function showOverlay(title, body, buttonText) {
@@ -354,13 +346,11 @@ function startGame() {
   accumulator = 0;
   lastTime = performance.now();
   hideOverlay();
-  setStatus("Live");
 }
 
 function pauseGame() {
   if (!running || gameOver) return;
   paused = true;
-  setStatus("Paused");
   showOverlay("Paused", "Press space or tap start to resume.", "Resume");
 }
 
@@ -368,18 +358,11 @@ function endGame() {
   running = false;
   gameOver = true;
   paused = false;
-  setStatus("Game Over");
   showOverlay("Good run", "You hit your tail. Ready for another orbit?", "Play again");
 }
 
 function setInput(directionKey, isDown) {
   input[directionKey] = isDown;
-  if (directionKey === "left") {
-    leftBtn.classList.toggle("active", isDown);
-  }
-  if (directionKey === "right") {
-    rightBtn.classList.toggle("active", isDown);
-  }
 }
 
 function attachInput() {
@@ -409,24 +392,6 @@ function attachInput() {
       setInput("right", false);
     }
   });
-
-  const pointerPress = (directionKey) => (event) => {
-    event.preventDefault();
-    setInput(directionKey, true);
-  };
-
-  const pointerRelease = (directionKey) => (event) => {
-    event.preventDefault();
-    setInput(directionKey, false);
-  };
-
-  leftBtn.addEventListener("pointerdown", pointerPress("left"));
-  leftBtn.addEventListener("pointerup", pointerRelease("left"));
-  leftBtn.addEventListener("pointerleave", pointerRelease("left"));
-
-  rightBtn.addEventListener("pointerdown", pointerPress("right"));
-  rightBtn.addEventListener("pointerup", pointerRelease("right"));
-  rightBtn.addEventListener("pointerleave", pointerRelease("right"));
 
   canvas.addEventListener("pointerdown", (event) => {
     const rect = canvas.getBoundingClientRect();
@@ -467,6 +432,5 @@ document.addEventListener("visibilitychange", () => {
 
 resizeCanvas();
 attachInput();
-setStatus("Ready");
 showOverlay("Globe Snake", "Turn left/right to stay on the sphere. Eat the bright orb. Avoid your tail.", "Start");
 requestAnimationFrame(loop);

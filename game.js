@@ -13,8 +13,8 @@ const SETTINGS = {
   fixedDelta: 16,
   cameraZ: 2.4,
   maxSpeedBoost: 0.6,
-  initialGlobeScale: 0.85,
-  globeGrowthPerOrb: 0.015,
+  initialGlobeScale: 0.75,
+  globeGrowthPerOrb: 0.025,
   globeScaleLerp: 0.04,
   maxGlobeScale: 1.15,
 };

@@ -2,7 +2,6 @@
 
 A 3D snake game played on the surface of a sphere. Navigate around the globe, eat pellets to grow, and avoid colliding with your own tail.
 
-
 ## Run Locally
 
 This is a static site with no build step. Serve the files with any static server:
